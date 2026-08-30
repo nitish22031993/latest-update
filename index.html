@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HH Prayaas Digital Visit Form</title>
+<style>
+*{box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:#f2f2f2;margin:0;padding:20px;color:#111}
+.page {
+    max-width: 1000px;
+    margin: 0 auto 25px;
+    background: #fff;
+    padding: 25px;
+    border: 4px solid #000;
+    box-shadow: 0 2px 10px #bbb;
+}
+.tophead{display:grid;grid-template-columns:1fr 130px 1fr;align-items:center;border-bottom:1px solid #111;padding-bottom:8px;margin-bottom:8px}.logo{width:120px;height:140px;object-fit:contain;display:block;margin:auto}.topleft{font-weight:bold;font-size:12px}.topright{font-weight:bold;font-size:12px;text-align:right}.session{text-align:center;font-weight:bold;font-size:15px;margin:6px 0 10px}h1{text-align:center;font-size:22px;margin:0 0 8px}
+.sub{text-align:center;font-size:13px;margin-bottom:18px}
+.section{background:#111;color:#fff;font-weight:bold;padding:8px 10px;margin:18px 0 10px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.field{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.field label{font-size:12px;font-weight:bold;min-width:150px}
+input,textarea,select{width:100%;padding:7px;border:1px solid #555;background:#fff;font-size:12px}
+table{width:100%;border-collapse:collapse;font-size:11px}
+th,td{border:1px solid #555;padding:5px}
+th{background:#eee}
+td input{border:0;padding:5px}
+textarea{min-height:70px;resize:vertical}
+.buttons{position:sticky;top:0;background:#f2f2f2;padding:10px;text-align:center;z-index:5}
+button{padding:10px 18px;border:0;background:#111;color:#fff;margin:3px;cursor:pointer;border-radius:4px}
+button.secondary{background:#555}
+.signature{height:35px}
+@media(max-width:700px){.grid2{grid-template-columns:1fr}.field{display:block}.field label{display:block;margin-bottom:4px}}
+@media print {
+  body {
+    background: #fff;
+    padding: 0;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .page {
+    box-shadow: none;
+    margin: 0;
+    padding: 12mm;
+    max-width: none;
+    page-break-after: always;
+  }
+
+  .buttons {
+    display: none !important;
+  }
+
+  input,
+  textarea,
+  select {
+    border: 1px solid #555;
+  }
+
+  .section {
+    background: #D01F3B !important;
+    color: #fff !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  th {
+    background: #eee !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .page:last-child {
+    page-break-after: auto;
+  }
+}
+
+/* Photo upload sections */
+.passport-photo-section{margin:4px auto 12px;text-align:center;}
+.passport-grid{display:flex;justify-content:center;align-items:flex-start;gap:10px;max-width:360px;margin:0 auto;}
+.passport-item{text-align:center;}
+.passport-box{width:95px;height:120px;border:2px solid #111;margin:0 auto 3px;display:flex;align-items:center;justify-content:center;background:#fff;overflow:hidden;}
+.passport-box img{width:100%;height:100%;object-fit:cover;display:none;}
+.passport-label{font-weight:bold;font-size:12px;margin-bottom:4px;}
+.photo-input{font-size:10px;width:100%;padding:2px;border:0;}
+.house-photo-grid{display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-top:18px;}
+.house-photo-item{text-align:center;}
+.house-photo-box{height:250px;border:3px solid #111;display:flex;align-items:center;justify-content:center;background:#fff;overflow:hidden;margin-bottom:8px;}
+.house-photo-box img{width:100%;height:100%;object-fit:contain;display:none;}
+.house-photo-label{font-weight:bold;font-size:14px;margin-bottom:6px;}
+@media(max-width:700px){.passport-grid{grid-template-columns:repeat(3,1fr);gap:4px}.passport-box{width:90px;height:112px}.house-photo-grid{grid-template-columns:1fr;gap:15px}}
+@media print{
+  .photo-input{display:none !important;}
+  .passport-box{width:95px;height:120px;}
+  .house-photo-box{height:230px;}
+}
+</style>
+</head>
+<body>
+
+<div class="buttons">
+<button onclick="window.print()">🖨 Print Form</button>
+<button class="secondary" onclick="document.getElementById('form').reset()">Clear Form</button>
+<button class="secondary" onclick="saveData()">Save Data</button>
+</div>
+
+<form id="form">
+
+<div class="page">
+
+
+<div class="tophead"><div class="topleft">Ref. No.: <span>HH/PRAYAAS/26-27/</span></div><img src="hh-logo.jpg" class="logo"><div class="topright">School- Prayaas<br>Class- __________</div></div>
+
+<div class="passport-photo-section">
+  <div class="passport-grid">
+    <div class="passport-item">
+      <div class="passport-box"><img id="motherPhotoPreview" alt="Mother Passport Photo"></div>
+      <div class="passport-label">Mother</div>
+      <input class="photo-input" type="file" name="mother_passport_photo" accept="image/*" onchange="previewPhoto(this,'motherPhotoPreview')">
+    </div>
+    <div class="passport-item">
+      <div class="passport-box"><img id="fatherPhotoPreview" alt="Father Passport Photo"></div>
+      <div class="passport-label">Father</div>
+      <input class="photo-input" type="file" name="father_passport_photo" accept="image/*" onchange="previewPhoto(this,'fatherPhotoPreview')">
+    </div>
+    <div class="passport-item">
+      <div class="passport-box"><img id="studentPhotoPreview" alt="Student Passport Photo"></div>
+      <div class="passport-label">Student</div>
+      <input class="photo-input" type="file" name="student_passport_photo" accept="image/*" onchange="previewPhoto(this,'studentPhotoPreview')">
+    </div>
+  </div>
+</div>
+<div class="session">Session April 2026 - March 2027</div>
+
+<div class="section" style="text-align:center; background:#D01F3B; color:white;">
+    STUDENT DETAILS
+</div>
+<div class="grid2">
+<div>
+<div class="field"><label>Name of the Student</label><input name="student_name"></div>
+<div class="field"><label>Aadhar No.</label><input name="aadhar"></div>
+<div class="field"><label>Birth Certificate No.</label><input name="birth_certificate"></div>
+<div class="field"><label>Date of Birth</label><input type="date" name="dob"></div>
+<div class="field"><label>Age</label><input name="age"></div>
+<div class="field"><label>Address</label><input name="address"></div>
+<div class="field"><label>Target Class</label><input name="target_class"></div>
+</div>
+<div>
+<div class="field"><label>Last Attended School</label><input name="last_attended_school"></div>
+<div class="field"><label>Last Year School</label><input name="last_year_school"></div>
+<div class="field"><label>Last Class Attended</label><input name="last_class"></div>
+<div class="field"><label>Reason for Leaving/Changing</label><input name="reason"></div>
+<div class="field"><label>Referred by</label><input name="referred_by"></div>
+<div class="field"><label>Final Allotted Class</label><input name="final_class"></div>
+</div>
+</div>
+<div class="field"><label>Fees Paid in Previous School</label><input name="previous_fees"></div>
+
+<div class="section" style="text-align:center; background:#D01F3B; color:white;">
+    SIBLING DETAILS
+</div>
+<table>
+<thead><tr><th>S.No.</th><th>Name</th><th>M/F</th><th>Age</th><th>Current School & Class</th><th>Year</th><th>Attendance</th><th>Report Card</th></tr></thead>
+<tbody>
+<tr>
+    <td>1</td>
+    <td><input name="sib1_name"></td>
+    <td><input name="sib1_gender"></td>
+    <td><input name="sib1_age"></td>
+    <td><input name="sib1_school"></td>
+    <td><input name="sib1_year"></td>
+    <td><input name="sib1_attendance"></td>
+    <td><input name="sib1_report"></td>
+</tr>
+
+<tr>
+    <td>2</td>
+    <td><input name="sib2_name"></td>
+    <td><input name="sib2_gender"></td>
+    <td><input name="sib2_age"></td>
+    <td><input name="sib2_school"></td>
+    <td><input name="sib2_year"></td>
+    <td><input name="sib2_attendance"></td>
+    <td><input name="sib2_report"></td>
+</tr>
+
+<tr>
+    <td>3</td>
+    <td><input name="sib3_name"></td>
+    <td><input name="sib3_gender"></td>
+    <td><input name="sib3_age"></td>
+    <td><input name="sib3_school"></td>
+    <td><input name="sib3_year"></td>
+    <td><input name="sib3_attendance"></td>
+    <td><input name="sib3_report"></td>
+</tr>
+
+<tr>
+    <td>4</td>
+    <td><input name="sib4_name"></td>
+    <td><input name="sib4_gender"></td>
+    <td><input name="sib4_age"></td>
+    <td><input name="sib4_school"></td>
+    <td><input name="sib4_year"></td>
+    <td><input name="sib4_attendance"></td>
+    <td><input name="sib4_report"></td>
+</tr>
+
+<tr>
+    <td>5</td>
+    <td><input name="sib5_name"></td>
+    <td><input name="sib5_gender"></td>
+    <td><input name="sib5_age"></td>
+    <td><input name="sib5_school"></td>
+    <td><input name="sib5_year"></td>
+    <td><input name="sib5_attendance"></td>
+    <td><input name="sib5_report"></td>
+</tr>
+</tbody></table>
+
+<div class="section" style="text-align:center; background:#D01F3B; color:white;">
+    PARENT INFORMATION
+</div>
+<table>
+<thead><tr><th>Particulars</th><th>Mother</th><th>Father</th></tr></thead>
+<tbody>
+<tr><td><b>Name</b></td><td><input name="mother_0"></td><td><input name="father_0"></td></tr><tr><td><b>Occupation</b></td><td><input name="mother_1"></td><td><input name="father_1"></td></tr><tr><td><b>Monthly Income</b></td><td><input name="mother_2"></td><td><input name="father_2"></td></tr><tr><td><b>Mobile No.</b></td><td><input name="mother_3"></td><td><input name="father_3"></td></tr><tr><td><b>Alternate No.</b></td><td><input name="mother_4"></td><td><input name="father_4"></td></tr><tr><td><b>Aadhar No.</b></td><td><input name="mother_5"></td><td><input name="father_5"></td></tr><tr><td><b>Availability on Message</b></td><td><input name="mother_6"></td><td><input name="father_6"></td></tr><tr><td><b>Availability on Whatsapp</b></td><td><input name="mother_7"></td><td><input name="father_7"></td></tr><tr><td><b>Type of House with detail / Rental Amount</b></td><td><input name="mother_8"></td><td><input name="father_8"></td></tr>
+</tbody></table>
+
+<div class="section" style="text-align:center; background:#D01F3B; color:white;">
+    ENCLOSURES
+</div>
+<table>
+<thead>
+<tr>
+    <th>S.No.</th>
+    <th>Particulars</th>
+    <th>Status</th>
+    <th>Particulars</th>
+    <th>Status</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+    <td>1</td>
+    <td>Aadhar of Student</td>
+    <td>
+        <select name="enc1_status">
+            <option value="">Select</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+    </td>
+    <td>Previous Attendance</td>
+    <td>
+        <select name="enc5_status">
+            <option value="">Select</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+    </td>
+</tr>
+
+<tr>
+    <td>2</td>
+    <td>Birth Certificate of Student</td>
+    <td>
+        <select name="enc2_status">
+            <option value="">Select</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+    </td>
+    <td>Previous Report Card</td>
+    <td>
+        <select name="enc6_status">
+            <option value="">Select</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+    </td>
+</tr>
+
+<tr>
+    <td>3</td>
+    <td>Aadhar of Mother</td>
+    <td>
+        <select name="enc3_status">
+            <option value="">Select</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+    </td>
+    <td>House photo</td>
+    <td>
+        <select name="enc7_status">
+            <option value="">Select</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+    </td>
+</tr>
+
+<tr>
+    <td>4</td>
+    <td>Aadhar of Father</td>
+    <td>
+        <select name="enc4_status">
+            <option value="">Select</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+    </td>
+    <td>Photo of House Front and Inside</td>
+    <td>
+        <select name="enc8_status">
+            <option value="">Select</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+    </td>
+</tr>
+</tbody>
+</table>
+<br>
+<div class="grid2">
+<div class="field"><label>Approved by</label><input name="approved_by"></div>
+<div class="field"><label>HH Representative</label><input value="Nitish Pandey" name="representative"></div>
+<div class="field"><label>Signature</label><input class="signature" name="hh_signature"></div>
+<div class="field"><label>Approval Date</label><input type="date" name="approval_date"></div>
+<div class="field"><label>Parent Signature</label><input class="signature" name="parent_signature"></div>
+<div class="field"><label>Date</label><input type="date" name="parent_date"></div>
+</div>
+</div>
+
+<div class="page">
+<h1>माता-पिता / अभिभावक द्वारा शपथ-पत्र</h1>
+
+<div style="margin-top:20px;line-height:1.7;font-size:13px">
+
+<p>मैं, श्री/श्रीमती ________________________________, अपने बच्चे को Helping Hand Foundation द्वारा प्रायोजित विद्यालय के माध्यम से शिक्षा दिलाने के लिए सहमत हूँ।</p>
+
+<p>मेरे बच्चे को विद्यालय लाने एवं विद्यालय से वापस ले जाने की जिम्मेदारी हमारी होगी। विद्यालय आने-जाने के दौरान अथवा विद्यालय में किसी भी प्रकार की घटना/दुर्घटना होने की पूर्ण जिम्मेदारी हमारी होगी। इसके लिए Helping Hand Foundation किसी भी प्रकार से उत्तरदायी नहीं होगा।</p>
+
+<p><b>मैं/हम यह घोषणा एवं शपथ लेते हैं कि:</b></p>
+
+<ol>
+<li>हमारे द्वारा दी गई सभी जानकारी/दस्तावेज हमारी जानकारी के अनुसार पूर्णतः सत्य हैं तथा हमने कोई भी तथ्य छिपाया नहीं है।</li>
+
+<li>मेरा बच्चा नियमित रूप से विद्यालय में उपस्थित रहेगा तथा न्यूनतम 70% उपस्थिति बनाए रखेगा।</li>
+
+<li>मेरा बच्चा कक्षा का कार्य पूरा करेगा तथा निर्धारित समय के भीतर सभी असाइनमेंट जमा करेगा।</li>
+
+<li>मेरा बच्चा सभी यूनिट टेस्ट एवं परीक्षाओं में अनिवार्य रूप से सम्मिलित होगा।</li>
+
+<li>हम विद्यालय द्वारा आयोजित सभी अभिभावक-शिक्षक बैठकों (PTM) में अनिवार्य रूप से भाग लेंगे।</li>
+
+<li>यदि Helping Hand Foundation मेरी, मेरे बच्चे अथवा मेरे परिवार की फोटो/वीडियो का उपयोग अपनी वेबसाइट, सोशल मीडिया अथवा अन्य प्रचार सामग्री में करता है, तो मुझे/हमें कोई आपत्ति नहीं है।</li>
+</ol>
+
+</div>
+
+<div class="grid2" style="margin-top:35px">
+<div class="field">
+<label>दिनांक</label>
+<input type="date" name="undertaking_date">
+</div>
+
+<div class="field">
+<label>स्थान</label>
+<input name="undertaking_place">
+</div>
+</div>
+
+<div class="field" style="margin-top:20px">
+<label>माता/पिता के हस्ताक्षर</label>
+<input class="signature" name="undertaking_signature">
+</div>
+
+<div class="section" style="text-align:center; background:#D01F3B; color:white;">
+    टिप्पणी
+</div>
+<textarea name="remark"></textarea>
+
+</div>
+
+<div class="page">
+  <h1>HOUSE PHOTOGRAPHS</h1>
+  <div class="sub">Upload clear photographs of the house from the front and inside.</div>
+
+  <div class="house-photo-grid">
+    <div class="house-photo-item">
+      <div class="house-photo-box"><img id="houseFrontPhotoPreview" alt="House Fort Photo"></div>
+      <div class="house-photo-label">HOUSE FORT PHOTO</div>
+      <input class="photo-input" type="file" name="house_front_photo" accept="image/*" onchange="previewPhoto(this,'houseFrontPhotoPreview')">
+    </div>
+
+    <div class="house-photo-item">
+      <div class="house-photo-box"><img id="houseInsidePhotoPreview" alt="House Inside Photo"></div>
+      <div class="house-photo-label">HOUSE INSIDE PHOTO</div>
+      <input class="photo-input" type="file" name="house_inside_photo" accept="image/*" onchange="previewPhoto(this,'houseInsidePhotoPreview')">
+    </div>
+  </div>
+</div>
+</form>
+
+<script>
+function previewPhoto(input, previewId){
+  const file = input.files && input.files[0];
+  const img = document.getElementById(previewId);
+  if(!file){ img.src=''; img.style.display='none'; return; }
+  const reader = new FileReader();
+  reader.onload = function(e){ img.src=e.target.result; img.style.display='block'; };
+  reader.readAsDataURL(file);
+}
+
+function saveData(){
+  const data={};
+  document.querySelectorAll('#form input,#form textarea,#form select').forEach(e=>data[e.name]=e.value);
+  localStorage.setItem('hhPrayaasForm',JSON.stringify(data));
+  alert('Form data saved on this device.');
+}
+window.addEventListener('load',()=>{
+  const saved=localStorage.getItem('hhPrayaasForm');
+  if(saved){
+    const data=JSON.parse(saved);
+    Object.keys(data).forEach(k=>{
+      const e=document.querySelector('[name="'+k+'"]');
+      if(e)e.value=data[k];
+    });
+  }
+});
+</script>
+</body>
+</html>
